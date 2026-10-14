@@ -1,0 +1,236 @@
+/* ============================================================
+   Construction Diorama — scene + preview page styles
+   ============================================================ */
+:root {
+  --cs-bg: #f6f1e7;
+  --cs-bg-deep: #efe7d6;
+  --cs-ink: #4a4238;
+  --cs-ink-soft: #8a7f6e;
+  --cs-accent: #c96f4a;
+  --cs-panel: #fffdf8;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 500px at 50% -10%, #fffaf0 0%, var(--cs-bg) 55%, var(--cs-bg-deep) 100%);
+  color: var(--cs-ink);
+  font-family: "Avenir Next", Avenir, "Segoe UI", system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+.page-head { text-align: center; padding: 48px 20px 8px; }
+.page-head .eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cs-accent);
+  margin: 0 0 10px;
+}
+.page-head h1 {
+  margin: 0;
+  font-size: clamp(28px, 4.5vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.page-head .sub {
+  margin: 12px auto 0;
+  max-width: 560px;
+  color: var(--cs-ink-soft);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+main { padding: 12px 16px 40px; }
+
+/* ---------- Stage ---------- */
+#construction-scene {
+  position: relative;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+#construction-scene svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 22px;
+  box-shadow: 0 30px 70px -30px rgba(90, 75, 50, 0.35), 0 4px 18px rgba(90, 75, 50, 0.08);
+  background: linear-gradient(180deg, #fdf8ee 0%, #f6f1e7 60%, #f1e9d8 100%);
+}
+
+/* ---------- Controls ---------- */
+.cs-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px auto 0;
+  max-width: 1180px;
+  padding: 10px 14px;
+  background: var(--cs-panel);
+  border: 1px solid rgba(140, 120, 90, 0.18);
+  border-radius: 999px;
+  box-shadow: 0 10px 30px -18px rgba(90, 75, 50, 0.4);
+}
+.cs-controls button {
+  appearance: none;
+  border: 1px solid rgba(140, 120, 90, 0.25);
+  background: #fff;
+  color: var(--cs-ink);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background 0.15s ease;
+  flex: 0 0 auto;
+}
+.cs-controls button:hover { background: #fbf3e2; transform: translateY(-1px); }
+.cs-controls button:active { transform: translateY(0); }
+.cs-controls button.primary {
+  background: var(--cs-accent);
+  border-color: var(--cs-accent);
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  font-size: 16px;
+}
+.cs-controls button.primary:hover { background: #b85f3c; }
+
+.cs-controls input[type="range"] {
+  flex: 1 1 180px;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--cs-accent) var(--fill, 0%), #e7dcc4 var(--fill, 0%));
+  outline: none;
+  cursor: pointer;
+}
+.cs-controls input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--cs-accent);
+  box-shadow: 0 2px 6px rgba(90, 75, 50, 0.3);
+}
+.cs-controls input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--cs-accent);
+}
+
+.cs-time {
+  font-variant-numeric: tabular-nums;
+  font-size: 12.5px;
+  color: var(--cs-ink-soft);
+  min-width: 86px;
+  text-align: center;
+}
+.cs-phase {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cs-accent);
+  background: rgba(201, 111, 74, 0.1);
+  padding: 6px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.cs-controls select {
+  appearance: none;
+  border: 1px solid rgba(140, 120, 90, 0.25);
+  background: #fff;
+  color: var(--cs-ink);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.page-foot {
+  text-align: center;
+  color: var(--cs-ink-soft);
+  font-size: 12.5px;
+  padding: 0 20px 48px;
+}
+
+/* ============================================================
+   SVG-internal animations (worker legs, trees, clouds, etc.)
+   ============================================================ */
+#construction-scene.cs-paused svg * {
+  animation-play-state: paused !important;
+}
+
+/* transform helpers used by the JS timeline */
+#construction-scene .anim-grow,
+#construction-scene .anim-pop {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+#construction-scene .anim-popc {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+/* worker walk cycle */
+#construction-scene .worker .leg {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+}
+#construction-scene .worker.walking .legL { animation: csLegA 0.32s ease-in-out infinite alternate; }
+#construction-scene .worker.walking .legR { animation: csLegB 0.32s ease-in-out infinite alternate; }
+#construction-scene .worker.walking .wbody { animation: csBob 0.32s ease-in-out infinite alternate; }
+@keyframes csLegA { from { transform: rotate(16deg); } to { transform: rotate(-16deg); } }
+@keyframes csLegB { from { transform: rotate(-16deg); } to { transform: rotate(16deg); } }
+@keyframes csBob { from { transform: translateY(0); } to { transform: translateY(-2.4px); } }
+
+/* trees */
+#construction-scene .treeTop {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: csSway 5.5s ease-in-out infinite alternate;
+}
+@keyframes csSway { from { transform: rotate(-1.4deg); } to { transform: rotate(1.6deg); } }
+
+/* clouds */
+#construction-scene .cloud { animation: csDrift linear infinite; }
+@keyframes csDrift { from { transform: translateX(-320px); } to { transform: translateX(1560px); } }
+
+/* concrete mixer drum + lorry wheels */
+#construction-scene .spin {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: csSpin 1.8s linear infinite;
+}
+#construction-scene .driving .wheel {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: csSpin 0.55s linear infinite;
+}
+@keyframes csSpin { to { transform: rotate(360deg); } }
+
+/* hologram bob (planning scene) */
+#construction-scene .holoBob { animation: csHoloBob 2.2s ease-in-out infinite alternate; }
+@keyframes csHoloBob { from { transform: translateY(0); } to { transform: translateY(-4px); } }
+
+/* warm interior glow pulse once the home is lit */
+#construction-scene.cs-lit .pulseGlow { animation: csPulse 2.6s ease-in-out infinite alternate; }
+@keyframes csPulse { from { opacity: 0.55; } to { opacity: 0.85; } }
+
+@media (max-width: 640px) {
+  .cs-controls { border-radius: 18px; justify-content: center; }
+  .cs-phase { order: 5; }
+}
